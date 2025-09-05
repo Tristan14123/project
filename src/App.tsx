@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FolderIcon, PlayIcon, FileTextIcon, CheckCircleIcon, AlertCircleIcon, DownloadIcon } from 'lucide-react';
+import { FolderIcon, PlayIcon, FileTextIcon, CheckCircleIcon, AlertCircleIcon } from 'lucide-react';
 
 interface ExecutionResult {
   success: boolean;
@@ -76,8 +76,9 @@ function App() {
     setProgress(100);
   };
 
-  const downloadReport = () => {
-    // Simulate Excel file download
+  const openReport = () => {
+    // This should ideally open the file, but for now, it will download it.
+    // The original request for `os.startfile` is not possible from the browser.
     const blob = new Blob(['Rapport Excel simulé'], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -177,7 +178,7 @@ function App() {
                 <h3 className={`font-semibold mb-2 ${
                   result.success ? 'text-green-900' : 'text-red-900'
                 }`}>
-                  {result.success ? 'Analyse terminée avec succès!' : 'Erreur lors de l\'analyse'}
+                  {result.success ? 'Contrôle terminé ✅' : 'Erreur lors de l\'analyse'}
                 </h3>
                 <p className={`mb-4 ${
                   result.success ? 'text-green-800' : 'text-red-800'
@@ -195,11 +196,11 @@ function App() {
                     </div>
                     
                     <button
-                      onClick={downloadReport}
+                      onClick={openReport}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm"
                     >
-                      <DownloadIcon className="w-4 h-4" />
-                      Ouvrir le rapport Excel
+                      <FileTextIcon className="w-4 h-4" />
+                      Ouvrir le rapport
                     </button>
                   </div>
                 )}
